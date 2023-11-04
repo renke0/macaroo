@@ -12,6 +12,7 @@ brew 'graphviz'
 brew 'nano'
 brew 'zsh'
 brew 'zsh-completions'
+brew 'rectangle'
 
 # Dev
 brew 'gh'
@@ -34,6 +35,8 @@ cask 'devcleaner'
 cask 'whatsapp'
 cask 'google-chrome'
 cask 'jetbrains-toolbox'
+cask 'iterm2'
+cask 'alt-tab'
 
 # Quicklook
 cask 'qlmarkdown'

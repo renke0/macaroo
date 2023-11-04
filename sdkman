@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Install SDKMAN! if not yet installed
+if test ! "$(which sdk)"; then
+  curl -s "https://get.sdkman.io" | bash
+  source "$HOME/.sdkman/bin/sdkman-init.sh"
+fi
