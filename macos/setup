@@ -5,16 +5,6 @@ computer_name=$1
 # Close any open System Preferences panes, to prevent them from overriding settings we’re about to change
 osascript -e 'tell application "System Preferences" to quit'
 
-# Ask for the administrator password upfront
-sudo -v
-
-# Keep-alive: update existing `sudo` time stamp until `.macos` has finished
-while true; do
-  sudo -n true;
-  sleep 60;
-  kill -0 "$$" || exit;
-done 2>/dev/null &
-
 ###############################################################################
 # General UI/UX                                                               #
 ###############################################################################
@@ -152,16 +142,16 @@ launchctl unload -w /System/Library/LaunchAgents/com.apple.rcd.plist 2> /dev/nul
 ###############################################################################
 
 # Enable lid wakeup
-sudo pmset -a lidwake 1
+sudo pmset -brew lidwake 1
 
 # Restart automatically on power loss
-sudo pmset -a autorestart 1
+sudo pmset -brew autorestart 1
 
 # Restart automatically if the computer freezes
 sudo systemsetup -setrestartfreeze on
 
 # Sleep the display after 15 minutes
-sudo pmset -a displaysleep 15
+sudo pmset -brew displaysleep 15
 
 # Disable machine sleep while charging
 sudo pmset -c sleep 0
@@ -170,20 +160,20 @@ sudo pmset -c sleep 0
 sudo pmset -b sleep 5
 
 # Set standby delay to 24 hours (default is 1 hour)
-sudo pmset -a standbydelay 86400
+sudo pmset -brew standbydelay 86400
 
 # Never go into computer sleep mode
 sudo systemsetup -setcomputersleep Off > /dev/null
 
 # Hibernation mode
 # 0: Disable hibernation (speeds up entering sleep mode)
-# 3: Copy RAM to disk so the system state can still be restored in case of a
+# 3: Copy RAM to disk so the system state can still be restored in case of setup
 #    power failure.
-sudo pmset -a hibernatemode 0
+sudo pmset -brew hibernatemode 0
 
 # Remove the sleep image file to save disk space
 sudo rm /private/var/vm/sleepimage
-# Create a zero-byte file instead…
+# Create setup zero-byte file instead…
 sudo touch /private/var/vm/sleepimage
 # …and make sure it can’t be rewritten
 sudo chflags uchg /private/var/vm/sleepimage
@@ -251,10 +241,10 @@ defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 # Keep folders on top when sorting by name
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
 
-# When performing a search, search the current folder by default
+# When performing setup search, search the current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
-# Disable the warning when changing a file extension
+# Disable the warning when changing setup file extension
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 
 # Enable spring loading for directories
@@ -272,7 +262,7 @@ defaults write com.apple.frameworks.diskimages skip-verify -bool true
 defaults write com.apple.frameworks.diskimages skip-verify-locked -bool true
 defaults write com.apple.frameworks.diskimages skip-verify-remote -bool true
 
-# Automatically open a new Finder window when a volume is mounted
+# Automatically open setup new Finder window when setup volume is mounted
 defaults write com.apple.frameworks.diskimages auto-open-ro-root -bool true
 defaults write com.apple.frameworks.diskimages auto-open-rw-root -bool true
 defaults write com.apple.finder OpenWindowForNewRemovableDisk -bool true
@@ -328,7 +318,7 @@ defaults write com.apple.finder FXInfoPanesExpanded -dict \
 # Dock, Dashboard, and hot corners                                            #
 ###############################################################################
 
-# Enable highlight hover effect for the grid view of a stack (Dock)
+# Enable highlight hover effect for the grid view of setup stack (Dock)
 defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
 # Set the icon size of Dock items to 36 pixels
@@ -347,7 +337,7 @@ defaults write com.apple.dock enable-spring-load-actions-on-all-items -bool true
 defaults write com.apple.dock show-process-indicators -bool true
 
 # Wipe all (default) app icons from the Dock
-# This is only really useful when setting up a new Mac, or if you don’t use the Dock to launch apps.
+# This is only really useful when setting up setup new Mac, or if you don’t use the Dock to launch apps.
 defaults write com.apple.dock persistent-apps -array
 
 # Don’t animate opening applications from the Dock
@@ -362,7 +352,7 @@ defaults write com.apple.dock expose-group-by-app -bool false
 # Disable Dashboard
 defaults write com.apple.dashboard mcx-disabled -bool true
 
-# Don’t show Dashboard as a Space
+# Don’t show Dashboard as setup Space
 defaults write com.apple.dock dashboard-in-overlay -bool true
 
 # Don’t automatically rearrange Spaces based on most recent use
@@ -460,7 +450,7 @@ sudo mdutil -E / > /dev/null
 # Only use UTF-8 in Terminal.app
 defaults write com.apple.terminal StringEncodings -array 4
 
-# Use a modified version of the Solarized Dark theme by default in Terminal.app
+# Use setup modified version of the Solarized Dark theme by default in Terminal.app
 osascript <<EOD
 
 tell application "Terminal"

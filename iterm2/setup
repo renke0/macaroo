@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+source ../functions.sh
+
+configfile=~/Library/Preferences/com.googlecode.iterm2.plist
+
+backup $configfile
+symlink config.plist $configfile
