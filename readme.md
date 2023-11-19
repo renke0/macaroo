@@ -1,0 +1,3 @@
+```shell
+curl -sL "" | bash
+```
