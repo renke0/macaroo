@@ -1,3 +1,3 @@
 ```shell
-curl -sL "" | bash
+bash -c "$(curl -fsSL https://bit.ly/macaroo)"
 ```
