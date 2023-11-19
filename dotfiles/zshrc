@@ -1,0 +1,20 @@
+# Load user configurations
+source "$HOME/.environment"
+source "$HOME/.aliases"
+
+# Load Prezto
+source "$HOME/.zprezto/init.zsh"
+
+# Load p10k
+source "$HOME/.cache/p10k-instant-prompt-renke.zsh"
+source "$HOME/.p10k.zsh"
+
+# Load SDKMAN!
+source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Load NVM
+source "$NVM_DIR/nvm.sh"
+source "$NVM_DIR/bash_completion"
+
+# Load Bun
+source "$HOME/.bun/_bun"

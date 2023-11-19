@@ -1,0 +1,73 @@
+# Foreground Colors
+export FG_BLACK='30'
+export FG_RED='31'
+export FG_GREEN='32'
+export FG_YELLOW='33'
+export FG_BLUE='34'
+export FG_MAGENTA='35'
+export FG_CYAN='36'
+export FG_WHITE='37'
+
+# Bright Foreground Colors
+export FG_BRIGHT_BLACK='90'
+export FG_BRIGHT_RED='91'
+export FG_BRIGHT_GREEN='92'
+export FG_BRIGHT_YELLOW='93'
+export FG_BRIGHT_BLUE='94'
+export FG_BRIGHT_MAGENTA='95'
+export FG_BRIGHT_CYAN='96'
+export FG_BRIGHT_WHITE='97'
+
+# Background Colors
+export BG_BLACK='40'
+export BG_RED='41'
+export BG_GREEN='42'
+export BG_YELLOW='43'
+export BG_BLUE='44'
+export BG_MAGENTA='45'
+export BG_CYAN='46'
+export BG_WHITE='47'
+
+# Bright Background Colors
+export BG_BRIGHT_BLACK='100'
+export BG_BRIGHT_RED='101'
+export BG_BRIGHT_GREEN='102'
+export BG_BRIGHT_YELLOW='103'
+export BG_BRIGHT_BLUE='104'
+export BG_BRIGHT_MAGENTA='105'
+export BG_BRIGHT_CYAN='106'
+export BG_BRIGHT_WHITE='107'
+
+# Special effects
+export BOLD='\033[1'
+export UNDERLINE='\033[4'
+export BLINK='\033[5'
+export INVERT='\033[7'
+export ANSI_RESET='\033[0'
+
+print() {
+  local message="$1"
+  local codes=("${@:2}")
+  local escape_code=""
+
+  for code in "${codes[@]}"; do
+    escape_code+=";${code}"
+  done
+  echo -en "\033[${escape_code:1}m${message}\033[0m" > /dev/tty
+}
+
+println() {
+  echo -e "$(print "$@")" > /dev/tty
+}
+
+alignleft() {
+  local text=$1
+  local width=$2
+  printf "%-${width}s" "$text"
+}
+
+alignright() {
+  local text=$1
+  local width=$2
+  printf "%${width}s" "$text"
+}

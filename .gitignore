@@ -1,2 +1,5 @@
 .idea/
+out/
+temp/
 *.iml
+macaroo.log
