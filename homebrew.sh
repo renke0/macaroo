@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
 
+if [ "$SKIP_HOMEBREW" == "true" ]; then
+  msg "Skipping Homebrew config"
+  divider
+  return
+fi
+
 # imports
-source "$MACAROO_HOME/dotfiles/functions"
-source "$MACAROO_HOME/dotfiles/ansi"
 source "$MACAROO_HOME/helper.sh"
 
 # functions
@@ -63,4 +67,5 @@ process_brew_file "$MACAROO_HOME/brewfile"
 
 msg "Cleaning up..."
 brew cleanup
+msg "Done."
 divider

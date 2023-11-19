@@ -1,3 +1,5 @@
+source "$MACAROO_HOME/dotfiles/ansi"
+
 userconfigs() {
   exec > /dev/tty 2>&1
   groovy bootstrap.groovy "userConfigs" "$@"
@@ -20,7 +22,6 @@ msg() {
 error() {
   println "$1" "$FG_RED"
 }
-
 
 toolname() {
    print "$(alignleft " $1" 26)" "$FG_BLACK" "$BG_YELLOW"

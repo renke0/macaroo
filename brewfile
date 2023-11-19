@@ -41,6 +41,11 @@ cask 'iterm2'
 cask 'alt-tab'
 cask 'pocket-casts'
 cask 'intellij-idea'
+cask 'slack'
+cask 'sublime-text'
+cask 'devtoys'
+cask 'postman'
+cask 'the-unarchiver'
 
 # Fonts
 cask 'font-jetbrains-mono'

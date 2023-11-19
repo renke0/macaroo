@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+if [ "$SKIP_MACOS" == "true" ]; then
+  msg "Skipping MacOS config"
+  divider
+  return
+fi
+
 computer_name=$1
 
 # Close any open System Preferences panes, to prevent them from overriding settings we’re about to change

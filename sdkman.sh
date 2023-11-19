@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
+
+if [ "$SKIP_SDKMAN" == "true" ]; then
+  msg "Skipping SDKMAN! config"
+  divider
+  return
+fi
+
 source "$MACAROO_HOME/dotfiles/functions"
-source "$MACAROO_HOME/dotfiles/ansi"
 source "$MACAROO_HOME/helper.sh"
 
 verify() {
@@ -33,4 +39,5 @@ verify java
 verify groovy
 verify gradle
 
+msg "Done."
 divider

@@ -5,6 +5,16 @@ export MACAROO_HOME="$HOME/.macaroo"
 export MACAROO_TEMP="$MACAROO_HOME/temp"
 export MACAROO_LOG="$MACAROO_HOME/macaroo.log"
 
+# dev flags
+export SKIP_SDKMAN=true
+export SKIP_HOMEBREW=true
+export SKIP_DOCKER=true
+export SKIP_NODE=true
+export SKIP_PREZTO=false
+export SKIP_GIT=true
+export SKIP_ITERM2=true
+export SKIP_MACOS=true
+
 # imports
 source "$MACAROO_HOME/dotfiles/functions"
 source "$MACAROO_HOME/dotfiles/ansi"
@@ -22,7 +32,7 @@ init() {
 finalize() {
   msg "Cleaning up..."
   rm -rf "$MACAROO_TEMP"
-  msg "Done!"
+  msg "All set!"
 }
 
 userconfig() {
@@ -49,4 +59,7 @@ splashscreen
 source sdkman.sh
 userconfig
 source homebrew.sh
+source node.sh
+source prezto.sh
+source docker.sh
 finalize

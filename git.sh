@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+if [ "$SKIP_GIT" == "true" ]; then
+  msg "Skipping git config"
+  divider
+  return
+fi
+
+
 source "$HOME/.mac-config/functions.sh"
 
 workspace_dir="$HOME/workspace"

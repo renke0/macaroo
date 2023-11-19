@@ -3,7 +3,9 @@ source "$HOME/.environment"
 source "$HOME/.aliases"
 
 # Load Prezto
-source "$HOME/.zprezto/init.zsh"
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+fi
 
 # Load p10k
 source "$HOME/.cache/p10k-instant-prompt-renke.zsh"
@@ -13,8 +15,5 @@ source "$HOME/.p10k.zsh"
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Load NVM
-source "$NVM_DIR/nvm.sh"
-source "$NVM_DIR/bash_completion"
-
-# Load Bun
-source "$HOME/.bun/_bun"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
