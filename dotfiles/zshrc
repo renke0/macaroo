@@ -1,19 +1,20 @@
-# Load user configurations
-source "$HOME/.environment"
-source "$HOME/.aliases"
-
-# Load Prezto
+# Load Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Load p10k
-source "$HOME/.cache/p10k-instant-prompt-renke.zsh"
-source "$HOME/.p10k.zsh"
+# Load user configurations
+source "$HOME/.environment"
+source "$HOME/.aliases"
+source "$HOME/.functions"
+source "$HOME/.ansi"
 
 # Load SDKMAN!
 source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Load NVM
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
+
+# Load starship
+eval "$(starship init zsh)"

@@ -1,11 +1,5 @@
 source "$MACAROO_HOME/dotfiles/ansi"
 
-userconfigs() {
-  exec > /dev/tty 2>&1
-  groovy bootstrap.groovy "userConfigs" "$@"
-  exec > "$MACAROO_LOG" 2>&1
-}
-
 splashscreen() {
   println " ooo. .oo.  .oo.   .oooo.    .ooooo.   .oooo.   oooo d8b  .ooooo.   .ooooo." "$FG_RED"
   println "\`888P\"Y88bP\"Y88b  \`P  )88b  d88' \`\"Y8 \`P  )88b  \`888\"\"8P d88' \`88b d88' \`88b" "$FG_RED"
@@ -24,13 +18,17 @@ error() {
 }
 
 toolname() {
-   print "$(alignleft " $1" 26)" "$FG_BLACK" "$BG_YELLOW"
+  print "$(alignleft " $1" 26)" "$FG_BLACK" "$BG_YELLOW"
 }
 
 markdone() {
-  println " ✔️ " "$BG_GREEN" "$FG_BLACK"
+  println " ✔️ " "$BG_GREEN"
 }
 
-divider() {
-  println "\n============================================================================\n" "$FG_CYAN"
+markerror() {
+  println " ✖️ $1 " "$BG_RED"
+}
+
+pause() {
+  read -rp "Press enter to continue..." > /dev/tty
 }

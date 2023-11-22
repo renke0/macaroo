@@ -1,5 +1,6 @@
 # Taps
 tap 'homebrew/cask-fonts'
+tap 'mongodb/brew'
 
 # Binaries
 brew 'bash'
@@ -13,6 +14,8 @@ brew 'zsh-completions'
 brew 'gpg'
 brew 'gawk'
 brew 'jq'
+brew 'wget'
+brew 'starship'
 
 # Utilities
 brew 'rectangle'
@@ -22,6 +25,9 @@ cask 'notunes'
 brew 'gh'
 brew 'git'
 brew 'nvm'
+
+# Databases
+brew 'mongodb-community'
 
 # Docker
 brew 'colima'

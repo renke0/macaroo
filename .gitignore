@@ -1,5 +1,6 @@
 .idea/
+node_modules/
 out/
-temp/
+.temp/
 *.iml
-macaroo.log
+*.log

@@ -39,21 +39,26 @@ export BG_BRIGHT_CYAN='106'
 export BG_BRIGHT_WHITE='107'
 
 # Special effects
-export BOLD='\033[1'
-export UNDERLINE='\033[4'
-export BLINK='\033[5'
-export INVERT='\033[7'
-export ANSI_RESET='\033[0'
+export BOLD='\033[1m'
+export UNDERLINE='\033[4m'
+export BLINK='\033[5m'
+export INVERT='\033[7m'
+export ANSI_RESET='\033[0m'
 
 print() {
   local message="$1"
   local codes=("${@:2}")
   local escape_code=""
 
-  for code in "${codes[@]}"; do
-    escape_code+=";${code}"
-  done
-  echo -en "\033[${escape_code:1}m${message}\033[0m" > /dev/tty
+  if [[ ${#codes[@]} -eq 0 ]]; then
+    escape_code="$ANSI_RESET"
+  else
+    for code in "${codes[@]}"; do
+      escape_code+=";${code}"
+    done
+    escape_code="\033[${escape_code:1}m"
+  fi
+  echo -en "$escape_code${message}$ANSI_RESET" > /dev/tty
 }
 
 println() {

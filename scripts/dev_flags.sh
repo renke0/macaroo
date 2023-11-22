@@ -1,0 +1,9 @@
+export SKIP_HOMEBREW=false
+export SKIP_NODE=false
+export SKIP_USER_CONFIGURATION=false
+export SKIP_SDKMAN=false
+export SKIP_DOCKER=false
+export SKIP_PREZTO=false
+export SKIP_GIT=false
+export SKIP_DOTFILES=false
+export SKIP_MACOS=false

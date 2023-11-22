@@ -1,3 +1,5 @@
+zstyle ':prezto:*:*' color 'yes'
+
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
@@ -7,11 +9,9 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'git' \
-  'syntax-highlighting' \
   'history-substring-search' \
   'prompt'
 
 zstyle ':prezto:module:editor' key-bindings 'emacs'
 
-zstyle ':prezto:module:prompt' theme 'powerlevel10k'
+zstyle ':prezto:module:prompt' theme 'sorin'
