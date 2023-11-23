@@ -5,8 +5,8 @@ export MACAROO_HOME="$HOME/.macaroo"
 export MACAROO_SCRIPTS="$MACAROO_HOME/scripts"
 export MACAROO_RESOURCES="$MACAROO_HOME/resources"
 export MACAROO_TEMP="$MACAROO_HOME/.temp"
-export MACAROO_LOG="$MACAROO_HOME/macaroo.log"
-export MACAROO_ERROR_LOG="$MACAROO_HOME/macaroo-error.log"
+export MACAROO_LOG="$HOME/Library/Logs/macaroo.log"
+export MACAROO_ERROR_LOG="$HOME/Library/Logs/macaroo-error.log"
 export MACAROO_TS="$MACAROO_HOME/macaroo.ts"
 
 # imports
@@ -22,16 +22,21 @@ source "$MACAROO_SCRIPTS/docker.sh"
 source "$MACAROO_SCRIPTS/dotfiles.sh"
 source "$MACAROO_SCRIPTS/macos.sh"
 source "$MACAROO_SCRIPTS/dev_flags.sh"
+source "$MACAROO_SCRIPTS/post_install.sh"
+
+git_default_profiles=("me" "work")
 
 bootstrap() {
   _init_bootstrap
+  init_flags "$@"
+
   install_homebrew
   println
 
   install_node
   println
 
-  read_user_configuration
+  read_user_configuration "${git_default_profiles[@]}"
   println
 
   install_homebrew_packages
@@ -77,14 +82,12 @@ _init_bootstrap() {
 
 _finalize_bootstrap() {
   msg "Finalizing configurations..."
-  # set the default shell
-  sudo chsh -s /bin/zsh
-
-  # make notunes start on login
-  osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/noTunes.app", hidden:true}'
+  link_macaroo_to_repo
+  use_zsh
+  create_notunes_login_item
 
   msg "Cleaning up..."
-#  rm -rf "$MACAROO_TEMP"
+  rm -rf "$MACAROO_TEMP"
   msg "All set!"
 }
 
@@ -97,4 +100,4 @@ _authorize() {
   done 2> /dev/null &
 }
 
-bootstrap
+bootstrap "$@"

@@ -3,7 +3,7 @@
 install_prezto() {
   if [ "$SKIP_PREZTO" == "true" ]; then
     msg "Skipping Prezto config"
-    return;
+    return
   fi
   source "$MACAROO_HOME/dotfiles/functions"
   source "$MACAROO_SCRIPTS/commons.sh"

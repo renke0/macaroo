@@ -118,6 +118,9 @@ configure_macos() {
   # Increase sound quality for Bluetooth headphones/headsets
   defaults write com.apple.BluetoothAudioAgent "Apple Bitpool Min (editable)" -int 40
 
+  # Display the bluetooth icon in the taskbar
+  defaults write com.apple.controlcenter.plist Bluetooth -int 18
+
   # Enable full keyboard access for all controls (e.g. enable Tab in modal dialogs)
   defaults write NSGlobalDomain AppleKeyboardUIMode -int 3
 
@@ -127,6 +130,9 @@ configure_macos() {
 
   # Follow the keyboard focus while zoomed in
   defaults write com.apple.universalaccess closeViewZoomFollowsFocus -bool true
+
+  # Make the fn keys work as actual function keys
+  defaults write -g com.apple.keyboard.fnState 1
 
   # Disable press-and-hold for keys in favor of key repeat
   defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
@@ -334,8 +340,8 @@ configure_macos() {
   # Enable highlight hover effect for the grid view of setup stack (Dock)
   defaults write com.apple.dock mouse-over-hilite-stack -bool true
 
-  # Set the icon size of Dock items to 36 pixels
-  defaults write com.apple.dock tilesize -int 36
+  # Set the icon size of Dock items to 48 pixels
+  defaults write com.apple.dock tilesize -int 48
 
   # Change minimize/maximize window effect
   defaults write com.apple.dock mineffect -string "scale"
@@ -349,9 +355,21 @@ configure_macos() {
   # Show indicator lights for open applications in the Dock
   defaults write com.apple.dock show-process-indicators -bool true
 
-  # Wipe all (default) app icons from the Dock
-  # This is only really useful when setting up setup new Mac, or if you don’t use the Dock to launch apps.
-  defaults write com.apple.dock persistent-apps -array
+  # Apps to be pinned on the dock
+  local pinned_apps=("Google Chrome" "IntelliJ IDEA" "Sublime Text" "iTerm" "Postman" "DevToys" "Notion" "Slack"
+    "Spotify" "Pocket Casts" "WhatsApp")
+  local dock_items=()
+
+  for app_name in "${pinned_apps[@]}"; do
+    dock_items+=("$(printf '%s%s%s%s%s' \
+      '<dict><key>tile-data</key><dict><key>file-data</key><dict>' \
+      '<key>_CFURLString</key><string>' \
+      "/Applications/$app_name.app" \
+      '</string><key>_CFURLStringType</key><integer>0</integer>' \
+      '</dict></dict></dict>')")
+  done
+
+  defaults write com.apple.dock persistent-apps -array "${dock_items[@]}"
 
   # Don’t animate opening applications from the Dock
   defaults write com.apple.dock launchanim -bool false

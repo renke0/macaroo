@@ -32,3 +32,16 @@ markerror() {
 pause() {
   read -rp "Press enter to continue..." > /dev/tty
 }
+
+yesno() {
+  local prompt="$1"
+
+  while true; do
+    read -rp "$prompt (y/n): " response
+    case "$response" in
+      [Yy] | [Yy][Ee][Ss]) return 0 ;; # User confirmed
+      [Nn] | [Nn][Oo]) return 1 ;;     # User denied
+      *) echo "Please enter 'y' or 'n'" ;;
+    esac
+  done
+}

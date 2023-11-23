@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+source "$HOME/.macaroo/scripts/commons.sh"
+
+# This might have severe side effects if executed in a computer where ssh and gpg keys are already configured
+git() {
+  echo "This will remove all your ssh and gpg configuration and is not reversible."
+  if yesno "Are you sure you want to continue?"; then
+    rm -f "$HOME/.gitprofiles"
+    echo "Removed ~/.gitprofiles"
+
+    rm -f "$HOME/.ssh/config"
+    echo "Removed ~/.ssh/config"
+
+    rm -f "$HOME/.git_ssh_config"
+    echo "Removed ~/.git_ssh_config"
+
+    find "$HOME/.ssh" -type f -name "macaroo_*" -delete
+    echo "Removed ~/.ssh/macaroo_*"
+
+    gpg --list-secret-keys --keyid-format=long \
+      | gawk '/^sec/ {getline; gsub(/[[:space:]]/, ""); print}' \
+      | xargs gpg --batch --delete-secret-and-public-keys --yes
+    echo "Removed all gpg keys"
+  else
+    echo "Operation cancelled"
+  fi
+}
+
+"$@"

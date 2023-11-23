@@ -9,7 +9,7 @@ const EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
 async function route(args: string[]) {
   switch (args[0]) {
     case "config":
-      return await readUserConfiguration(args[1], args[2]);
+      return await readUserConfiguration(args[1], args[2], args.slice(3));
     case "decrypt":
       return await decrypt(args[1], args[2]);
     case "hostfile":
@@ -17,10 +17,10 @@ async function route(args: string[]) {
   }
 }
 
-async function readUserConfiguration(password: string, fileName: string): Promise<void> {
+async function readUserConfiguration(password: string, fileName: string, defaultProfiles: string[]): Promise<void> {
   const config = {
     computerName: await readComputerName(),
-    github: await readGithubConfiguration(),
+    github: await readGithubConfiguration(defaultProfiles),
   };
   const encrypted = await encrypt(JSON.stringify(config), password);
   const fileContents = JSON.stringify(encrypted);
@@ -37,9 +37,9 @@ async function readComputerName(): Promise<string> {
   return result.computerName;
 }
 
-async function readGithubConfiguration(): Promise<GithubConfiguration> {
+async function readGithubConfiguration(defaultProfiles: string[] ): Promise<GithubConfiguration> {
   const users = await readGithubUsers();
-  const profiles = await readGithubProfiles(users);
+  const profiles = await readGithubProfiles(users, defaultProfiles);
   for (const profile of profiles) {
     profile.user = users.find((user) => user.username === profile.user)!;
   }
@@ -99,36 +99,25 @@ async function readGithubUsers(): Promise<GithubUser[]> {
   return users;
 }
 
-async function readGithubProfiles(users: GithubUser[]): Promise<GithubProfile[]> {
-  let addMore = true;
+async function readGithubProfiles(users: GithubUser[], defaultProfiles: string[]): Promise<GithubProfile[]> {
   const profiles: GithubProfile[] = [];
-  while (addMore) {
-    const result = await prompts([
-      {
-        message: "Enter the profile name",
-        type: "text",
-        name: "name",
-        validate: (input) => (COMMON_NAME.test(input) ? true : "Invalid profile name"),
-      },
-      {
-        message: "What user do you want to associate with this profile?",
-        type: "select",
-        name: "user",
-        choices: users.map((user) => ({
-          title: `${user.username} <${user.email}> (${user.domain}${user.domain ? "." : ""}github.com)`,
-          value: user.username,
-        })),
-      },
-      {
-        message: "Do you want to add more profiles?",
-        type: "confirm",
-        name: "addMore",
-        initial: true,
-      },
-    ]);
-    addMore = result.addMore;
-    delete result.addMore;
-    profiles.push({...result});
+  for (const profileName of defaultProfiles) {
+    if (users.length > 1) {
+      const result = await prompts([
+        {
+          message: `What user do you want to associate with your '${profileName}' profile?`,
+          type: "select",
+          name: "user",
+          choices: users.map((user) => ({
+            title: `${user.username} <${user.email}> (${user.domain}${user.domain ? "." : ""}github.com)`,
+            value: user.username,
+          })),
+        },
+      ]);
+      profiles.push({name: profileName, ...result});
+    } else {
+      profiles.push({name: profileName, user: users[0].username});
+    }
   }
   return profiles;
 }
@@ -172,7 +161,7 @@ Host ${entry.host}
   HostName ${entry.hostname}
   AddKeysToAgent yes
   UseKeychain yes
-  IdentityFile ~/.ssh/id_${entry.username}`;
+  IdentityFile ~/.ssh/macaroo_${entry.username}`;
   }
   await fs.writeFile(fileName, fileContents, "utf-8");
 }
