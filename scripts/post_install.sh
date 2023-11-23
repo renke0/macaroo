@@ -1,3 +1,5 @@
+source "$MACAROO_HOME/dotfiles/functions"
+
 link_macaroo_to_repo() {
   git init
   git remote add origin git@github.com:renke0/macaroo.git

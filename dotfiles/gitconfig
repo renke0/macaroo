@@ -47,8 +47,13 @@
 	whoami = config user.email
 
 	# Amend the last commit with the current changes and push it
-	fixup = "!git add . && git commit --amend --no-edit && git push --force"
+	fixup = "!git add . && git commit --amend --reuse-message=HEAD && git push --force-with-lease"
 
+	ready = "!r() { git add . && git commit -m \"$1\" && git push; }; r"
+
+	feature = "!f() { git checkout -b feature/$1; }; f"
+
+  pushf = push --force-with-lease
 [apply]
 
 	# Detect whitespace errors when applying a patch.

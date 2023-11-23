@@ -37,7 +37,7 @@ async function readComputerName(): Promise<string> {
   return result.computerName;
 }
 
-async function readGithubConfiguration(defaultProfiles: string[] ): Promise<GithubConfiguration> {
+async function readGithubConfiguration(defaultProfiles: string[]): Promise<GithubConfiguration> {
   const users = await readGithubUsers();
   const profiles = await readGithubProfiles(users, defaultProfiles);
   for (const profile of profiles) {

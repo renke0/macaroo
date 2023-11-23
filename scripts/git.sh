@@ -92,6 +92,10 @@ _create_git_ssh_file() {
     echo -e "$statement\n" | cat - "$git_main_ssh_config_file" > /tmp/out && mv -f /tmp/out "$git_main_ssh_config_file"
   fi
 
+  if ! grep -qF "Host *" "$git_main_ssh_config_file"; then
+    echo -e "\nHost *\n  UseKeychain yes" > "$git_main_ssh_config_file"
+  fi
+
   local github_data
   github_data=$(jq -rc ".github" <<< "$USER_CONFIGURATION_JSON")
   ts-node "$MACAROO_TS" "hostfile" "$github_data" "$git_ssh_config_file"

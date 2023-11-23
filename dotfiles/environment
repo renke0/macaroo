@@ -1,10 +1,5 @@
 export DEFAULT_USER=$USER
 
-GPG_TTY=$(tty)
-export GPG_TTY
-
-export NVM_DIR="$HOME/.nvm"
-
 # Home
 export SDKMAN_HOME="$HOME/.sdkman"
 export MACAROO_HOME="$HOME/.macaroo"
@@ -12,3 +7,13 @@ export MACAROO_HOME="$HOME/.macaroo"
 # PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=~/.git:$PATH
+export PATH=/opt/homebrew/bin:$PATH
+
+# Remaining variables
+
+export STARSHIP_CONFIG=$MACAROO_HOME/resources/starship.toml
+
+export NVM_DIR="$HOME/.nvm"
+
+GPG_TTY=$(tty)
+export GPG_TTY

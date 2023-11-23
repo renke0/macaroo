@@ -1,5 +1,5 @@
 # Create setup backup of setup file by moving it and appending ".backup" to its name
-backup() {
+function backup() {
   local target=$1
   if [ -e "$target" ]; then
     if [ ! -L "$target" ]; then
@@ -9,7 +9,7 @@ backup() {
 }
 
 # Create setup symlink of setup file
-symlink() {
+function symlink() {
   local file=$1
   local link=$2
   if [ -L "$link" ]; then
@@ -46,4 +46,16 @@ function o() {
   else
     open "$@"
   fi
+}
+
+# Concatenates source files into a summary to help with automated code review
+function summarize() {
+  find_command="find \"$(pwd)\" -type f \( "
+  for extension in "$@"; do
+    find_command+="-name \"*.$extension\" -o "
+  done
+  find_command="${find_command% -o } \) -exec bash -c 'echo \"=== {} ===\"; cat \"{}\"; echo \"\";' \; > \"summary.txt\""
+
+  eval "$find_command"
+  echo "Summary saved to summary.txt"
 }

@@ -1,0 +1,155 @@
+"$schema" = "https://starship.rs/config-schema.json"
+format = """
+$cmd_duration\
+$os\
+$username\
+$directory\
+$git_branch\
+$git_metrics\
+$git_status\
+$java\
+$nodejs\
+$custom\
+[ ](fg:nord10 bg:nord0)\
+$line_break\
+$character\
+"""
+# Nord theme
+palette = "nord"
+
+[palettes.nord]
+# Polar Night
+nord0 = '#2E3440' # Gunmetal
+nord1 = '#3B4252' # Charcoal 1
+nord2 = '#434C5E' # Charcoal 2
+nord3 = '#4C566A' # Payne's gray
+# Snow Storm
+nord4 = '#D8DEE9' # Lavender (web)
+nord5 = '#E5E9F0' # Alice blue
+nord6 = '#ECEFF4' # Anti-flash white
+# Frost
+nord7 = '#8FBCBB' # Cambridge blue
+nord8 = '#88C0D0' # Sky blue
+nord9 = '#81A1C1' # Air superiority blue
+nord10 = '#5E81AC' # Glaucous
+# Aurora
+nord11 = '#BF616A' # Indian red
+nord12 = '#D08770' # Burnt Sienna
+nord13 = '#EBCB8B' # Sunset
+nord14 = '#A3BE8C' # Olivine
+nord15 = '#B48EAD' # Lilac
+
+[os]
+style = "bg:nord1 fg:nord6"
+format = "[  $symbol]($style)"
+disabled = false
+
+[os.symbols]
+Alpaquita = "󰂚 "
+Alpine = " "
+Amazon = ""
+Android = " "
+Arch = " "
+Artix = " "
+CentOS = " "
+Debian = " "
+DragonFly = "🐉 "
+Emscripten = "󰨚 "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = " "
+Gentoo = ""
+HardenedBSD = " "
+Illumos = " "
+Linux = " "
+Mabox = " "
+Macos = " "
+Manjaro = " "
+Mariner = "󰠳 "
+MidnightBSD = " "
+Mint = "󰣭 "
+NetBSD = " "
+NixOS = "󱄅️ "
+OpenBSD = " "
+OpenCloudOS = " "
+openEuler = "󰏒 "
+openSUSE = " "
+OracleLinux = " "
+Pop = " "
+Raspbian = " "
+Redhat = "󱄛 "
+RedHatEnterprise = "󱄛 "
+Redox = "󰙨 "
+Solus = " "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = " "
+
+[cmd_duration]
+min_time = 100
+format = "[ $duration]($style)\n"
+show_notifications = true
+min_time_to_notify = 10_000
+show_milliseconds = true
+style = "fg:bold nord12"
+
+[character]
+format = " $symbol "
+success_symbol = "[ ](bold fg:nord14)"
+error_symbol = "[ ](bold fg:nord11)"
+
+[username]
+show_always = true
+style_user = "bg:nord1 fg:nord6 bold"
+format = "[ $user ]($style)[](bold bg:nord3 fg:nord1)"
+
+[directory]
+style = "bg:nord3 fg:nord6"
+format = "[ $path ]($style)[](bg:nord11 fg:nord3)"
+truncate_to_repo = true
+truncation_length = 4
+
+[git_branch]
+style = "bg:nord11 fg:nord1 bold"
+symbol = " "
+format = "[ $symbol$branch(:$remote_branch) ]($style)[](bg:nord11 fg:nord12)"
+
+[git_metrics]
+disabled = false
+added_style = "bg:nord12 fg:nord1 bold"
+deleted_style = "bg:nord12 fg:nord1 bold"
+format = "[  $added ]($added_style)[ $deleted ]($deleted_style)[](bg:nord12 fg:nord15)"
+only_nonzero_diffs = true
+
+[git_status]
+format = "[($all_status$ahead_behind)]($style)[](bg:nord10 fg:nord15)"
+style = "bg:nord15 fg:nord1 bold"
+conflicted = " $count  "
+ahead = " $count  "
+behind = "  $count  "
+diverged = "󰃻 $count  "
+untracked = " $count  "
+stashed = "󱧘 $count  "
+modified = "󰙏$count  "
+staged = " $count  "
+renamed = "󱅄 $count  "
+deleted = " $count  "
+
+[java]
+format = "[ ${symbol}(${version}) ]($style)"
+style = "bg:nord10 fg:nord1 bold italic"
+symbol = " "
+
+[nodejs]
+format = "[ ${symbol}(${version}) ]($style)"
+style = "bg:nord10 fg:nord1 bold italic"
+symbol = " "
+
+[custom.typescript]
+detect_files = ["tsconfig.json"]
+command = "tsc -v | awk '{print $2}'"
+format = "[ ${symbol}(v${output}) ]($style)"
+style = "bg:nord10 fg:nord1 bold italic"
+symbol = " "

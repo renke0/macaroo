@@ -16,6 +16,8 @@ brew 'gawk'
 brew 'jq'
 brew 'wget'
 brew 'starship'
+brew 'pandoc'
+brew 'pinentry-mac'
 
 # Utilities
 brew 'rectangle'
@@ -54,8 +56,7 @@ cask 'postman'
 cask 'the-unarchiver'
 
 # Fonts
-cask 'font-jetbrains-mono'
-cask 'font-fira-code'
+cask 'font-jetbrains-mono-nerd-font'
 
 # Quicklook
 cask 'qlmarkdown'
