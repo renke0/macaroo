@@ -5,6 +5,7 @@ fi
 
 # Load user configurations
 source "$HOME/.environment"
+source "$HOME/.private"
 source "$HOME/.aliases"
 source "$HOME/.functions"
 source "$HOME/.ansi"
@@ -16,5 +17,31 @@ source "$HOME/.sdkman/bin/sdkman-init.sh"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
+# Load ngrok auto-completion
+if command -v ngrok &>/dev/null; then
+  eval "$(ngrok completion)"
+fi
+
+# redocly auto-completion
+_redocly_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" redocly --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  _describe 'values' reply
+}
+compdef _redocly_yargs_completions redocly
+
+## Brew auto-completion
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 # Load starship
 eval "$(starship init zsh)"
+
+eval "$(pyenv init -)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi

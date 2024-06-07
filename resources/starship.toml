@@ -1,5 +1,7 @@
 "$schema" = "https://starship.rs/config-schema.json"
 format = """
+$time\
+$line_break\
 $cmd_duration\
 $os\
 $username\
@@ -153,3 +155,8 @@ command = "tsc -v | awk '{print $2}'"
 format = "[ ${symbol}(v${output}) ]($style)"
 style = "bg:nord10 fg:nord1 bold italic"
 symbol = " "
+
+[time]
+disabled = false
+time_format = '%d/%m/%Y %H:%M'
+utc_time_offset = '+2'

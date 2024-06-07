@@ -3,11 +3,13 @@ export DEFAULT_USER=$USER
 # Home
 export SDKMAN_HOME="$HOME/.sdkman"
 export MACAROO_HOME="$HOME/.macaroo"
+export WORKSPACE_HOME="$HOME/workspace"
 
 # PATH
 export PATH=/usr/local/bin:$PATH
 export PATH=~/.git:$PATH
 export PATH=/opt/homebrew/bin:$PATH
+export PATH=~/.local/bin:$PATH
 
 # Remaining variables
 
