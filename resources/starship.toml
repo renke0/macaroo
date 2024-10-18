@@ -1,19 +1,26 @@
 "$schema" = "https://starship.rs/config-schema.json"
 format = """
 $cmd_duration\
-$os\
-$username\
+$line_break\
 $directory\
 $git_branch\
 $git_metrics\
 $git_status\
 $java\
 $nodejs\
-$custom\
-[ ](fg:nord10 bg:nord0)\
+${custom.typescript}\
+[ ](fg:nord10 bg:none)\
 $line_break\
+$os\
+$username\
 $character\
 """
+
+right_format = """
+[](fg:nord1 bg:none)\
+$time
+"""
+
 # Nord theme
 palette = "nord"
 
@@ -89,21 +96,21 @@ Windows = " "
 
 [cmd_duration]
 min_time = 100
-format = "[ $duration]($style)\n"
+format = "[ 󰔟$duration]($style)"
 show_notifications = true
 min_time_to_notify = 10_000
 show_milliseconds = true
 style = "fg:bold nord12"
 
 [character]
-format = " $symbol "
-success_symbol = "[ ](bold fg:nord14)"
-error_symbol = "[ ](bold fg:nord11)"
+format = "$symbol "
+success_symbol = "[](bold bg:nord14 fg:nord1)[    ](bold fg:nord1 bg:nord14)[](fg:nord14 bg:none)"
+error_symbol = "[](bold bg:nord11 fg:nord1)[    ](bold fg:nord1 bg:nord11)[](fg:nord11 bg:none)"
 
 [username]
 show_always = true
 style_user = "bg:nord1 fg:nord6 bold"
-format = "[ $user ]($style)[](bold bg:nord3 fg:nord1)"
+format = "[ $user ]($style)"
 
 [directory]
 style = "bg:nord3 fg:nord6"
@@ -140,12 +147,12 @@ deleted = " $count  "
 [java]
 format = "[ ${symbol}(${version}) ]($style)"
 style = "bg:nord10 fg:nord1 bold italic"
-symbol = " "
+symbol = "󰅶 "
 
 [nodejs]
 format = "[ ${symbol}(${version}) ]($style)"
 style = "bg:nord10 fg:nord1 bold italic"
-symbol = " "
+symbol = " "
 
 [custom.typescript]
 detect_files = ["tsconfig.json"]
@@ -153,3 +160,10 @@ command = "tsc -v | awk '{print $2}'"
 format = "[ ${symbol}(v${output}) ]($style)"
 style = "bg:nord10 fg:nord1 bold italic"
 symbol = " "
+
+[time]
+disabled = false
+time_format = '  %Y-%m-%d %H:%M:%S'
+format = '[ $time ]($style)'
+style = 'bg:nord1 fg:nord6 bold'
+utc_time_offset = '0'

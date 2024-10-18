@@ -8,10 +8,12 @@ install_node() {
     msg "Configuring node"
     _install_nvm
     _install_nodejs
-    _install_yarn
-    _install_typescript
-    _install_tsnode
-    msg "Done."
+
+    tools=("yarn" "typescript" "ts-node" "@redocly/cli")
+    for tool in "${tools[@]}"
+    do
+      _npm_install "$tool"
+    done
   fi
 }
 
@@ -32,20 +34,8 @@ _install_nodejs() {
   markdone
 }
 
-_install_yarn() {
-  toolname "yarn"
-  npm install --global yarn
-  markdone
-}
-
-_install_typescript() {
-  toolname "typescript"
-  npm install --global typescript
-  markdone
-}
-
-_install_tsnode() {
-  toolname "ts-node"
-  npm install --global ts-node
+_npm_install() {
+  toolname "$1"
+  npm install --global "$1"
   markdone
 }

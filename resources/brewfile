@@ -54,6 +54,7 @@ cask 'sublime-text'
 cask 'devtoys'
 cask 'postman'
 cask 'the-unarchiver'
+cask 'ngrok'
 
 # Fonts
 cask 'font-jetbrains-mono-nerd-font'

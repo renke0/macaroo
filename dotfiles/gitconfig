@@ -36,9 +36,8 @@
 	# Interactive rebase with the given number of latest commits.
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
 
-	# Remove branches that have already been merged with main.
-	# a.k.a. ‘delete merged’
-  purge = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	# Remove branches that don't exist in the origin anymore.
+  prune = git-prune-branches
 
 	# List contributors with number of commits.
 	contributors = shortlog --summary --numbered
@@ -49,23 +48,33 @@
 	# Amend the last commit with the current changes and push it
 	fixup = "!git add . && git commit --amend --reuse-message=HEAD && git push --force-with-lease"
 
+  # Add all changed files, create a commit with a given message and push
 	ready = "!r() { git add . && git commit -m \"$1\" && git push; }; r"
 
+  # Create a new feature branch with the given name
 	feature = "!f() { git checkout -b feature/$1; }; f"
 
-  pushf = push --force-with-lease
-[apply]
+  # Create a new fix branch with the given name
+	fix = "!f() { git checkout -b fix/$1; }; f"
 
+  # Force push, but safely
+  pushf = push --force-with-lease
+
+  # Updates a branch and rebase the changes into the current branch
+  update = "!u() { git fetch origin $1:$1; }; u"
+
+  # Renames the current branch and also its remote
+  rename = "!r() { old_name=$(git rev-parse --abbrev-ref HEAD) && git branch -m $old_name $1 && git push origin --delete $old_name && git branch --unset-upstream $1 && git push origin $1 && git push origin -u $1; }; r"
+
+[apply]
 	# Detect whitespace errors when applying a patch.
 	whitespace = fix
 
 [branch]
-
 	# Show most recently changed branches first.
 	sort = -committerdate
 
 [core]
-
 	# Treat spaces before tabs and all kinds of trailing whitespace as an error.
 	# [default] trailing-space: looks for spaces at the end of a line
 	# [default] space-before-tab: looks for spaces before tabs at the beginning of a line
@@ -86,47 +95,39 @@
   excludesFile = ~/.gitignore
 
 [color]
-
 	# Use colors in Git commands that are capable of colored output when
 	# outputting to the terminal. (This is the default setting in Git ≥ 1.8.4.)
 	ui = auto
 
 [color "branch"]
-
 	current = yellow reverse
 	local = yellow
 	remote = green
 
 [color "diff"]
-
 	meta = yellow bold
 	frag = magenta bold # line info
 	old = red # deletions
 	new = green # additions
 
 [color "status"]
-
 	added = yellow
 	changed = green
 	untracked = cyan
 
 [commit]
-
 	# https://help.github.com/articles/signing-commits-using-gpg/
 	gpgsign = true
 
 [diff]
-
 	# Detect copies as well as renames.
 	renames = copies
 
 [merge]
-
 	# Include summaries of merged commits in newly created merge commit messages
 	log = true
 
 [push]
-
 	# https://git-scm.com/docs/git-config#git-config-pushdefault
 	default = simple
 	# Make `git push` push relevant annotated tags when pushing branches out.
@@ -134,5 +135,12 @@
   autoSetupRemote = true
 
 [init]
-
 	defaultBranch = main
+
+[advice]
+  # Disable cherry picking message while rebasing
+  skippedCherryPicks = false
+
+[fetch]
+  # Prune deleted remote branches when fetching
+  prune = true
