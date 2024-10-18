@@ -17,11 +17,6 @@ source "$HOME/.sdkman/bin/sdkman-init.sh"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"
 
-# Load ngrok auto-completion
-if command -v ngrok &>/dev/null; then
-  eval "$(ngrok completion)"
-fi
-
 # redocly auto-completion
 _redocly_yargs_completions()
 {
@@ -43,5 +38,5 @@ fi
 # Load starship
 eval "$(starship init zsh)"
 
-eval "$(pyenv init -)"
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi
+eval "$(pyenv init - > /dev/null 2>&1)"
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init - > /dev/null 2>&1)" ; fi

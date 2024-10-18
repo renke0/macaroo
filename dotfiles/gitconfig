@@ -37,7 +37,7 @@
 	reb = "!r() { git rebase -i HEAD~$1; }; r"
 
 	# Remove branches that don't exist in the origin anymore.
-  prune = "!p() { git fetch -p ; git branch -r | awk '{print $1}' | egrep -v -f /dev/fd/0 <(git branch -vv | grep origin) | awk '{print $1}' | xargs git branch -D; }; p"
+  prune = git-prune-branches
 
 	# List contributors with number of commits.
 	contributors = shortlog --summary --numbered
@@ -54,8 +54,8 @@
   # Create a new feature branch with the given name
 	feature = "!f() { git checkout -b feature/$1; }; f"
 
-  # Create a new bugfix branch with the given name
-	bugfix = "!f() { git checkout -b bugfix/$1; }; f"
+  # Create a new fix branch with the given name
+	fix = "!f() { git checkout -b fix/$1; }; f"
 
   # Force push, but safely
   pushf = push --force-with-lease
